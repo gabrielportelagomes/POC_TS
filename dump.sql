@@ -171,7 +171,7 @@ COPY public.movie_genres (id, name, created_at) FROM stdin;
 --
 
 COPY public.movies (id, name, streaming_service_id, genre_id, watched, date_watched, rating, created_at) FROM stdin;
-1	Mad Max: Estrada da FúriaI	2	6	f	\N	\N	2023-01-23 16:36:22.684233
+1	Mad Max: Estrada da FúriaI	2	6	t	23/01/2023	5	2023-01-23 16:36:22.684233
 \.
 
 
