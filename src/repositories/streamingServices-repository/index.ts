@@ -15,8 +15,24 @@ async function selectStreamingServices(): Promise<
   );
 }
 
+async function selectStreamingServiceById(
+  streaming_service_id: number
+): Promise<QueryResult<StreamingService>> {
+  return await connection.query(
+    `
+        SELECT 
+          id AS streaming_service_id, 
+          name AS streaming_service_name 
+        FROM movie_genres
+        WHERE id = $1;
+        `,
+    [streaming_service_id]
+  );
+}
+
 const streamingServicesRepositoy = {
   selectStreamingServices,
+  selectStreamingServiceById,
 };
 
 export default streamingServicesRepositoy;

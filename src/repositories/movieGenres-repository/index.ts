@@ -19,7 +19,8 @@ async function selectMovieGenreById(
   return await connection.query(
     `
         SELECT 
-            *
+          id AS movie_genre_id, 
+          name AS movie_genre_name 
         FROM movie_genres
         WHERE id = $1;
         `,

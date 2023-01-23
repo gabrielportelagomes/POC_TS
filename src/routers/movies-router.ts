@@ -27,7 +27,7 @@ moviesRouter.patch(
   validateBody(movieRatingSchema),
   updateMovie
 );
-moviesRouter.get("/:id", validateParams(genreIdSchema), getMoviesByGenre);
 moviesRouter.delete("/:id", validateParams(movieIdSchema), deleteMovie);
+moviesRouter.get("/genre/:id", validateParams(genreIdSchema), getMoviesByGenre);
 
 export { moviesRouter };

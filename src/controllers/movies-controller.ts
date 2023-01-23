@@ -18,6 +18,9 @@ export async function postMovie(req: Request, res: Response) {
     if (error.name === "DuplicatedItem") {
       return res.status(500).send(error.message);
     }
+    if (error.name === "NotFoundError") {
+      return res.status(500).send(error.message);
+    }
     return res.sendStatus(500);
   }
 }

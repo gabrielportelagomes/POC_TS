@@ -1,12 +1,27 @@
 import movieGenresRepositoy from "../../repositories/movieGenres-repository";
 import { duplicatedItem, notFoundError } from "../../errors";
 import moviesRepositoy from "../../repositories/movies-repository";
+import streamingServicesRepositoy from "../..//repositories/streamingServices-repository";
 
 async function postMovie(
   name: string,
   streaming_service_id: number,
   genre_id: number
 ) {
+  const streaming = await streamingServicesRepositoy.selectStreamingServiceById(
+    streaming_service_id
+  );
+
+  if (streaming.rows.length === 0) {
+    throw notFoundError();
+  }
+
+  const genre = await movieGenresRepositoy.selectMovieGenreById(genre_id);
+
+  if (genre.rows.length === 0) {
+    throw notFoundError();
+  }
+
   const movies = await moviesRepositoy.selectMoviesByInfos(
     name,
     streaming_service_id,
@@ -57,7 +72,7 @@ async function updateMovie(
 async function getMoviesByGenre(genre_id: number) {
   const movie_genre = await movieGenresRepositoy.selectMovieGenreById(genre_id);
 
-  if (!movie_genre || movie_genre.rows.length === 0) {
+  if (movie_genre.rows.length === 0) {
     throw notFoundError();
   }
 
