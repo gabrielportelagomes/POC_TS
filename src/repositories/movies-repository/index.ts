@@ -37,7 +37,7 @@ async function selectMovies(): Promise<QueryResult<MovieInfos>> {
   return await connection.query(
     `
         SELECT 
-            movies.id, movies.name, streaming_services.name AS streamign_service, movie_genres.name AS genre, movies.watched, movies.date_watched, movies.review, movies.created_at
+            movies.id, movies.name, streaming_services.name AS streamign_service, movie_genres.name AS genre, movies.watched, movies.date_watched, movies.rating, movies.created_at
         FROM movies
         JOIN streaming_services ON movies.streaming_service_id = streaming_services.id
         JOIN movie_genres ON movies.genre_id = movie_genres.id;
@@ -66,12 +66,26 @@ async function deleteMovieById(movie_id: number): Promise<void> {
   );
 }
 
+async function updateMovieById(
+  movie_id: number,
+  rating: number,
+  date_watched: string
+): Promise<void> {
+  await connection.query(
+    `
+        UPDATE  movies SET watched = true, date_watched = $1, rating = $2 WHERE id = $3;
+    `,
+    [date_watched, rating, movie_id]
+  );
+}
+
 const moviesRepositoy = {
   selectMoviesByInfos,
   createMovie,
   selectMovies,
   selectMovieById,
   deleteMovieById,
+  updateMovieById,
 };
 
 export default moviesRepositoy;

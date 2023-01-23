@@ -1,4 +1,4 @@
-import { CreateMovie, MovieIdParam } from "../protocols";
+import { CreateMovie, MovieIdParam, MovieRating } from "../protocols";
 import Joi from "joi";
 
 export const createMovieSchema = Joi.object<CreateMovie>({
@@ -9,4 +9,8 @@ export const createMovieSchema = Joi.object<CreateMovie>({
 
 export const movieIdSchema = Joi.object<MovieIdParam>({
   id: Joi.string().min(1).required(),
+});
+
+export const movieRatingSchema = Joi.object<MovieRating>({
+  rating: Joi.number().integer().min(0).max(5).required(),
 });

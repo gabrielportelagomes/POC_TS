@@ -14,14 +14,14 @@ export type Movie = {
   streaming_service_id: number;
   genre_id: number;
   watched: boolean;
-  date_watched: Date;
-  review: string;
+  date_watched: string;
+  rating: number;
   created_at: Date;
 };
 
 export type CreateMovie = Omit<
   Movie,
-  "id" | "watched" | "date_watched" | "review" | "created_at"
+  "id" | "watched" | "date_watched" | "rating" | "created_at"
 >;
 
 export type Error = {
@@ -35,8 +35,8 @@ export type MovieInfos = {
   streaming_service: string;
   genre: string;
   watched: boolean;
-  date_watched: Date;
-  review: string;
+  date_watched: string;
+  rating: number;
   created_at: Date;
 };
 
@@ -44,4 +44,6 @@ export type MovieIdParam = {
   id: string;
 };
 
-
+export type MovieRating = {
+  rating: number;
+};

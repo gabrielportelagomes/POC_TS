@@ -3,13 +3,28 @@ import {
   validateParams,
 } from "../middlewares/validation-middleware";
 import { Router } from "express";
-import { createMovieSchema, movieIdSchema } from "../schemas";
-import { deleteMovie, getMovies, postMovie } from "../controllers/movies-controller";
+import {
+  createMovieSchema,
+  movieIdSchema,
+  movieRatingSchema,
+} from "../schemas";
+import {
+  deleteMovie,
+  getMovies,
+  postMovie,
+  updateMovie,
+} from "../controllers/movies-controller";
 
 const moviesRouter = Router();
 
 moviesRouter.get("/", getMovies);
 moviesRouter.post("/", validateBody(createMovieSchema), postMovie);
+moviesRouter.patch(
+  "/:id",
+  validateParams(movieIdSchema),
+  validateBody(movieRatingSchema),
+  updateMovie
+);
 moviesRouter.delete("/:id", validateParams(movieIdSchema), deleteMovie);
 
 export { moviesRouter };
