@@ -39,3 +39,9 @@ export type MovieInfos = {
   review: string;
   created_at: Date;
 };
+
+export type MovieIdParam = {
+  id: string;
+};
+
+

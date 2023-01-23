@@ -29,9 +29,20 @@ async function getMovies() {
   return movies;
 }
 
+async function deleteMovie(movie_id: number) {
+  const movie = await moviesRepositoy.selectMovieById(movie_id);
+
+  if (movie.rowCount === 0) {
+    throw notFoundError();
+  }
+
+  await moviesRepositoy.deleteMovieById(movie_id);
+}
+
 const moviesService = {
   postMovie,
   getMovies,
+  deleteMovie,
 };
 
 export default moviesService;

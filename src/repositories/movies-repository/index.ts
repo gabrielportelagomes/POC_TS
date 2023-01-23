@@ -45,10 +45,33 @@ async function selectMovies(): Promise<QueryResult<MovieInfos>> {
   );
 }
 
+async function selectMovieById(movie_id: number): Promise<QueryResult<Movie>> {
+  return await connection.query(
+    `
+        SELECT 
+            *
+        FROM movies
+        WHERE id = $1;
+        `,
+    [movie_id]
+  );
+}
+
+async function deleteMovieById(movie_id: number): Promise<void> {
+  await connection.query(
+    `
+        DELETE FROM movies WHERE id = $1;
+    `,
+    [movie_id]
+  );
+}
+
 const moviesRepositoy = {
   selectMoviesByInfos,
   createMovie,
   selectMovies,
+  selectMovieById,
+  deleteMovieById,
 };
 
 export default moviesRepositoy;
