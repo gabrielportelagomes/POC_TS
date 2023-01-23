@@ -1,4 +1,4 @@
-import { DuplicatedItem } from "../../errors";
+import { duplicatedItem, notFoundError } from "../../errors";
 import moviesRepositoy from "../../repositories/movies-repository";
 
 async function postMovie(
@@ -13,14 +13,25 @@ async function postMovie(
   );
 
   if (movies.rowCount !== 0) {
-    throw DuplicatedItem();
+    throw duplicatedItem();
   }
 
   await moviesRepositoy.createMovie(name, streaming_service_id, genre_id);
 }
 
+async function getMovies() {
+  const movies = await moviesRepositoy.selectMovies();
+
+  if (!movies) {
+    throw notFoundError();
+  }
+
+  return movies;
+}
+
 const moviesService = {
   postMovie,
+  getMovies,
 };
 
 export default moviesService;

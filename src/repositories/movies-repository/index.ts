@@ -1,5 +1,5 @@
 import { connection } from "../../database/db";
-import { Movie } from "../../protocols";
+import { Movie, MovieInfos } from "../../protocols";
 import { QueryResult } from "pg";
 
 async function selectMoviesByInfos(
@@ -33,9 +33,22 @@ async function createMovie(
   );
 }
 
+async function selectMovies(): Promise<QueryResult<MovieInfos>> {
+  return await connection.query(
+    `
+        SELECT 
+            movies.id, movies.name, streaming_services.name AS streamign_service, movie_genres.name AS genre, movies.watched, movies.date_watched, movies.review, movies.created_at
+        FROM movies
+        JOIN streaming_services ON movies.streaming_service_id = streaming_services.id
+        JOIN movie_genres ON movies.genre_id = movie_genres.id;
+        `
+  );
+}
+
 const moviesRepositoy = {
   selectMoviesByInfos,
   createMovie,
+  selectMovies,
 };
 
 export default moviesRepositoy;
