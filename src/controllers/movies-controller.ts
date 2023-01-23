@@ -1,6 +1,11 @@
 import moviesService from "../services/movies-service";
 import { Request, Response } from "express";
-import { CreateMovie, MovieIdParam, MovieRating } from "../protocols";
+import {
+  CreateMovie,
+  GenreIdParam,
+  MovieIdParam,
+  MovieRating,
+} from "../protocols";
 import dayjs from "dayjs";
 
 export async function postMovie(req: Request, res: Response) {
@@ -57,6 +62,22 @@ export async function updateMovie(req: Request, res: Response) {
     await moviesService.updateMovie(movie_id, rating, date_watched);
 
     return res.sendStatus(200);
+  } catch (error) {
+    if (error.name === "NotFoundError") {
+      return res.status(404).send(error.message);
+    }
+    return res.sendStatus(500);
+  }
+}
+
+export async function getMoviesByGenre(req: Request, res: Response) {
+  const { id } = req.params as GenreIdParam;
+
+  const genre_id: number = parseInt(id);
+  try {
+    const movies = await moviesService.getMoviesByGenre(genre_id);
+
+    return res.status(200).send(movies.rows);
   } catch (error) {
     if (error.name === "NotFoundError") {
       return res.status(404).send(error.message);

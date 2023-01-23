@@ -5,12 +5,14 @@ import {
 import { Router } from "express";
 import {
   createMovieSchema,
+  genreIdSchema,
   movieIdSchema,
   movieRatingSchema,
 } from "../schemas";
 import {
   deleteMovie,
   getMovies,
+  getMoviesByGenre,
   postMovie,
   updateMovie,
 } from "../controllers/movies-controller";
@@ -25,6 +27,7 @@ moviesRouter.patch(
   validateBody(movieRatingSchema),
   updateMovie
 );
+moviesRouter.get("/:id", validateParams(genreIdSchema), getMoviesByGenre);
 moviesRouter.delete("/:id", validateParams(movieIdSchema), deleteMovie);
 
 export { moviesRouter };

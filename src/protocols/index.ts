@@ -44,6 +44,10 @@ export type MovieIdParam = {
   id: string;
 };
 
+export type GenreIdParam = {
+  id: string;
+};
+
 export type MovieRating = {
   rating: number;
 };

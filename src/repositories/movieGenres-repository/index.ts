@@ -13,8 +13,23 @@ async function selectMovieGenres(): Promise<QueryResult<MovieGenre>> {
   );
 }
 
+async function selectMovieGenreById(
+  genre_id: number
+): Promise<QueryResult<MovieGenre>> {
+  return await connection.query(
+    `
+        SELECT 
+            *
+        FROM movie_genres
+        WHERE id = $1;
+        `,
+    [genre_id]
+  );
+}
+
 const movieGenresRepositoy = {
   selectMovieGenres,
+  selectMovieGenreById,
 };
 
 export default movieGenresRepositoy;

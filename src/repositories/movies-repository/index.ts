@@ -79,6 +79,22 @@ async function updateMovieById(
   );
 }
 
+async function selectMoviesByGenre(
+  genre_id: number
+): Promise<QueryResult<MovieInfos>> {
+  return await connection.query(
+    `
+        SELECT 
+            movies.id, movies.name, streaming_services.name AS streamign_service, movie_genres.name AS genre, movies.watched, movies.date_watched, movies.rating, movies.created_at
+        FROM movies
+        JOIN streaming_services ON movies.streaming_service_id = streaming_services.id
+        JOIN movie_genres ON movies.genre_id = movie_genres.id
+        WHERE movies.genre_id = $1;
+        `,
+    [genre_id]
+  );
+}
+
 const moviesRepositoy = {
   selectMoviesByInfos,
   createMovie,
@@ -86,6 +102,7 @@ const moviesRepositoy = {
   selectMovieById,
   deleteMovieById,
   updateMovieById,
+  selectMoviesByGenre,
 };
 
 export default moviesRepositoy;
