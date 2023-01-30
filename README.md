@@ -80,13 +80,11 @@ npm run dev
   Body format:
 
   ```
-  [
     {
     "name": "Mad Max: Estrada da Fúria",
     "streaming_service_id": 2,
     "genre_id": 6
     }
-  ]
   ```
 
 - **PATCH("/movies/:id")**
@@ -95,11 +93,9 @@ npm run dev
   Body format:
 
   ```
-  [
     {
     "rating": 5
     }
-  ]
   ```
 
 - **DELETE("/movies/:id")**
