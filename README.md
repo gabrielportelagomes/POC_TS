@@ -12,7 +12,8 @@ npm i
 ```
 
 3. Create a PostgresQL database using the provided dump
-4. Run the back-end
+4. Configure the .env file using the .env.example file
+5. Run the back-end
 
 ```
 npm run dev
